@@ -1,0 +1,9 @@
+n = input()
+arr = list(input().split(' '))
+a = input()
+l = len(arr)
+for i in range(len(arr)):
+    if arr[i] == a:
+        l -= 1
+print(l)
+

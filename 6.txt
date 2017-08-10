@@ -1,0 +1,29 @@
+class Stu(object):
+    def __init__(self, name, x, y, z):
+        self.name = name
+        self.x = x
+        self.y = y
+        self.z = z
+
+    def volume(self):
+        return int(self.x) * int(self.y) * int(self.z)
+
+while 1:
+    N = int(input())
+    if N == -1:
+        break
+    arr = []
+    for i in range(N):
+        x, y, z, name = (k for k in input().split(' '))
+        s = Stu(name, x, y, z)
+        arr.append(s)
+    i_max = i_min = arr[0].volume()
+    max_num = min_num = 0
+    for i in range(1, N):
+        if arr[i].volume() > i_max:
+            i_max = arr[i].volume()
+            max_num = i
+        elif arr[i].volume() < i_min:
+            i_min = arr[i].volume()
+            min_num = i
+    print('{} took clay from {}.'.format(arr[max_num].name, arr[min_num].name))

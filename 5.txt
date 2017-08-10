@@ -1,0 +1,18 @@
+while 1:
+    M, N, i = (int(x) for x in (input().split(' ')))
+    arr = []
+    for it in range(M):
+        a = list(input().split(' '))
+        arr.append(a)
+    if i:
+        for j in range(M-1, -1, -1):
+            for k in range(N):
+                print(arr[j][k], end=' ')
+                if k == N-1:
+                    print()
+    else:
+        for j in range(M):
+            for k in range(N-1, -1, -1):
+                print(arr[j][k], end=' ')
+                if k == 0:
+                    print()
