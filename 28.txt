@@ -1,0 +1,40 @@
+#include<stdio.h>
+
+long long Knap(int,int,long long **);
+
+int main()
+{
+    int N;
+    while(~scanf("%d",&N))
+    {
+        if((1+N)*N % 4 != 0)
+        {
+            printf("0\n");
+            continue;
+        }
+        int half = (1+N)*N/4;
+        long long ** arr = new long long *[N];
+        for(int i=0; i<N; i++)
+            arr[i] = new long long [half];
+        for(int i=1; i<N; i++)
+            for(int j=0; j<half; j++)
+                arr[i][j] = -1;
+        for(int i=1; i<half; i++)
+            arr[0][i] = 0;
+        arr[0][0] = 1;
+        printf("%lld\n",Knap(N-1,half-1,arr)/2);
+    }
+    return 0;
+}
+
+long long Knap(int i,int j, long long ** arr)
+{
+    if(arr[i][j] != -1)
+        return arr[i][j];
+    if(i > j)
+        arr[i][j] = Knap(i-1,j,arr);
+    else if(i == j)
+        arr[i][j] = Knap(i-1,j,arr) + 1;
+    else arr[i][j] = Knap(i-1,j,arr) + Knap(i-1,j-i-1,arr);
+    return arr[i][j];
+}
