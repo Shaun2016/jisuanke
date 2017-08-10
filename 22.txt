@@ -1,0 +1,17 @@
+while 1:
+    n = int(input())
+    arr = [int(x) for x in input().split(' ')]
+    now_index = 0
+    total_len = 0
+    for i in range(n):
+        if arr[i] != arr[now_index]:
+            if i - now_index > 2:
+                total_len += 2
+            else:
+                total_len += (i - now_index)
+            now_index = i
+    if n - 1 != now_index:
+        total_len += 2
+    else:
+        total_len += 1
+    print(total_len)

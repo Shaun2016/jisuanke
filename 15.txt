@@ -1,0 +1,32 @@
+N = int(input())
+arr = list(int(x) for x in input().split(' '))
+one = two = three = 0
+for i in range(N):
+    three = two & arr[i];
+    two = two | one & arr[i];
+    one = one | arr[i];
+    one = one & (~three);
+    two = two & (~three);
+print(one)
+
+——————————————————————————————————————————————————
+
+#include<stdio.h>
+int main() {
+    int N;
+    scanf("%d",&N);
+    int* arr = new int[N];
+    for(int i=0;i<N;i++) {
+        scanf("%d",arr+i);
+    }
+    for(int j=0;j<N;j++) {
+        int num = 0;
+        for(int k=0;k<N;k++) {
+            if(arr[j] == arr[k])
+                num++;
+        }
+        if(num == 1)
+            printf("%d\n",arr[j]);
+    }
+    return 0;
+}

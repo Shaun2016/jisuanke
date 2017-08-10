@@ -1,0 +1,31 @@
+#include<stdio.h>
+/*
+动态规划
+*/
+#define min(a,b) (a<b?a:b)
+int main() {
+    int N;
+    while(~scanf("%d",&N)) {
+        int* a = new int[N];
+        int* dp = new int[N];
+        for(int i=0;i<N;i++) {
+            scanf("%d",a+i);
+        }
+        dp[N-1] = 0;
+        for(int i=N-2;i>=0;i--) {
+            dp[i] = N;
+            if(a[i]+i>=N-1) {
+                dp[i] = 1;
+                continue;
+            }
+            dp[i] = dp[i+1]+1;
+            for(int j=i+2;j<N&&j<=i+a[i];j++) {
+                dp[i] = min(dp[i],dp[j]+1);
+            }
+        }
+
+        printf("%d\n",dp[0]);
+
+    }
+    return 0;
+}

@@ -1,0 +1,15 @@
+while 1:
+    num = int(input())
+    arr = [int(x) for x in input().split(' ')]
+    res = int(input())
+    p1 = 0
+    p2 = 0
+    for i in range(num):
+        if arr[i] <= res and res - arr[i] in arr:
+            p1 = i + 1
+            for j in range(i + 1, num):
+                if arr[j] == res - arr[i]:
+                    p2 = j + 1
+                    break
+            break
+    print(p1, p2)

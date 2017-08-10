@@ -1,0 +1,12 @@
+n = input()
+l = [int(x) for x in input().split(' ')]
+m_sum = l[0]
+b = l[0]
+for i in range(1, int(n)):
+    if b > 0:
+        b += l[i]
+    else:
+        b = l[i]
+    if b > m_sum:
+        m_sum = b
+print(m_sum)
