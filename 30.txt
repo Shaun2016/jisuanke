@@ -1,0 +1,51 @@
+#include<stdio.h>
+#include<string.h>
+bool isPrimeNumber(int,int);
+
+int main() {
+    int N;
+    int m[10000] = {0};
+    int d[10000] = {0};
+    while(~scanf("%d",&N)) {
+        int t = 0;
+        for(int i=2;i<=N;i++) {
+            for(int j=1;j<i;j++) {
+                if(isPrimeNumber(j,i)) {
+                    d[t] = j;
+                    m[t] = i;
+                    t ++;
+                }
+            }
+        }
+        // 冒泡排序
+        int temp;
+        for(int i=0;i<t-1;i++) {
+            for(int j=i+1;j<t;j++) {
+                if(d[i]*m[j] > m[i]*d[j]) {
+                    temp = d[i];
+                    d[i] = d[j];
+                    d[j] = temp;
+                    temp = m[i];
+                    m[i] = m[j];
+                    m[j] = temp;
+                }
+            }
+        }
+        printf("0/1\n");
+        for(int i=0;i<t;i++)
+            printf("%d/%d\n",d[i],m[i]);
+            printf("1/1\n");
+    }
+    return 0;
+}
+// 判断一个分数是否是最简分数：分母 m，分子 d
+// 判断两个数是否互为质数
+bool isPrimeNumber(int m,int d) {
+    int r;
+    while(d) {
+        r = m%d;
+        m = d;
+        d = r;
+    }
+    return m == 1;
+}
