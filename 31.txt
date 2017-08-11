@@ -1,0 +1,66 @@
+#include<stdio.h>
+#include<string.h>
+#define N 21
+int state[N][N];
+int A,B,C;
+void dfs(int,int,int);
+
+int main() {
+    while(~scanf("%d%d%d",&A,&B,&C)) {
+        memset(state,0,sizeof(state));
+        dfs(0,0,C);
+        // 倒叙
+        for(int i=B;i>=0;i--) {
+            if(state[0][i]) {
+                printf("%d",C-i);
+                if(i != 0)
+                    printf(" ");
+            }
+        }
+        printf("\n");
+    }
+    return 0;
+}
+
+// 深度搜索
+void dfs(int a,int b,int c) {
+    if(state[a][b]) return;
+    // 备忘
+    state[a][b] = 1;
+    if(a > 0) {
+        if(B-b>a) {
+            dfs(0,b+a,c);
+        } else if(B-b > 0) {
+            dfs(a-B+b,B,c);
+        }
+        if(C-c>a) {
+            dfs(0,b,c+a);
+        } else if(C-c > 0) {
+            dfs(a-C+c,b,C);
+        }
+    }
+    if(b > 0) {
+        if(A-a>b) {
+            dfs(a+b,0,c);
+        } else if(A-a>0) {
+            dfs(A,b-A+a,c);
+        }
+        if(C-c>b) {
+            dfs(a,0,c+b);
+        } else if(C-c>0) {
+            dfs(a,b-C+c,C);
+        }
+    }
+    if(c > 0) {
+        if(A-a>c) {
+            dfs(a+c,b,0);
+        } else if(A-a>0) {
+            dfs(A,b,c-A+a);
+        }
+        if(B-b>c) {
+            dfs(a,b+c,0);
+        } else if(B-b>0) {
+            dfs(a,B,c-B+b);
+        }
+    }
+}
