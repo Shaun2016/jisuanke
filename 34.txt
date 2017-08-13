@@ -85,6 +85,7 @@ priority_queue<Edge> q;
 int main() {
     int N;
     while(~scanf("%d",&N)) {
+        res = 0;
         // 输入
         for(int i=0;i<N;i++) {
             for(int j=0;j<N;j++) {
@@ -116,8 +117,8 @@ int findRoot(int x) {
     if(uset[x] == x) {
         return x;
     }
-    // 不是根节点递归寻找根节点
-    return findRoot(uset[x]);
+    // 不是根节点递归寻找根节点，找到后赋值给uset[x]减少下次递归的次数，相当于压缩了到根节点的路径
+    return uset[x] = findRoot(uset[x]);
 }
 
 bool unionSet(int x,int y) {
@@ -153,6 +154,7 @@ int Kruscal(int N) {
         if(unionSet(e.x, e.y)) {
             lineNum ++;
             res += arr[e.x][e.y];
+            printf("%d--%d\n",e.x,e.y);
             // 连线数 = 点数 - 1 时为最小生成树，结束循环
             if(lineNum == N - 1) {
                 break;
@@ -161,3 +163,10 @@ int Kruscal(int N) {
         q.pop();
     }
 }
+/*
+4
+0 4 9 21
+4 0 8 17
+9 8 0 16
+21 17 16 0
+*/
