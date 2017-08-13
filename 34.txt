@@ -154,7 +154,7 @@ int Kruscal(int N) {
         if(unionSet(e.x, e.y)) {
             lineNum ++;
             res += arr[e.x][e.y];
-            printf("%d--%d\n",e.x,e.y);
+            //printf("%d--%d\n",e.x,e.y);
             // 连线数 = 点数 - 1 时为最小生成树，结束循环
             if(lineNum == N - 1) {
                 break;
