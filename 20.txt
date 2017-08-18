@@ -13,7 +13,6 @@ int main() {
         }
         dp[N-1] = 0;
         for(int i=N-2;i>=0;i--) {
-            dp[i] = N;
             if(a[i]+i>=N-1) {
                 dp[i] = 1;
                 continue;
