@@ -18,7 +18,7 @@ int main() {
                 continue;
             }
             dp[i] = dp[i+1]+1;
-            for(int j=i+2;j<N&&j<=i+a[i];j++) {
+            for(int j=i+2;j<=i+a[i];j++) {
                 dp[i] = min(dp[i],dp[j]+1);
             }
         }
