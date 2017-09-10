@@ -1,0 +1,62 @@
+#include<stdio.h>
+#include<vector>
+using namespace std;
+int Fibonacci(int a,int b,long int n);
+int main() {
+    int N,a,b;
+    long int n;
+    scanf("%d",&N);
+    for(int i=1;i<=N;i++) {
+        scanf("%d%d%ld",&a,&b,&n);
+        int result = Fibonacci(a,b,n);
+        printf("Case #%d: %d\n",i,result);
+    }
+    return 0;
+}
+
+int Fibonacci(int a,int b,long int n) {
+    vector<int> fibonacci;
+    fibonacci.push_back(a);
+    fibonacci.push_back(b);
+    int sum,end1,end2,turn_start=n,turn_end=n;
+    for(int i=2;i<n;i++) {
+        sum = fibonacci[i-2] + fibonacci[i-1];
+        if(sum < 10) {
+            end1 = *(fibonacci.end()-1);
+            fibonacci.push_back(sum);
+            end2 = sum;
+
+        } else {
+            end1 = sum/10;
+            end2 = sum%10;
+            fibonacci.push_back(end1);
+            fibonacci.push_back(end2);
+            i++;
+        }
+        int j=0;
+        for(;j<i-2;j++) {
+            if(fibonacci[j] == end1 && fibonacci[j+1] == end2) {
+                turn_start = j;
+                turn_end = i-2;
+                break;
+            }
+        }
+
+        if(j != i-2) {
+            break;
+        }
+    }
+    printf("start:%d end:%d\n",turn_start,turn_end);
+    if(n>turn_end) {
+        int remainer = (n-turn_start)%(turn_end - turn_start + 1);
+        if(remainer == 0) {
+            remainer = turn_end - turn_start + 1;
+        }
+        return fibonacci[turn_start+remainer-1];
+    }
+
+    /*vector<int>::iterator t;
+    for(t=fibonacci.begin(); t!=fibonacci.end();t++)
+        printf("%d ",*t);*/
+    return *(fibonacci.end()-1);
+}
