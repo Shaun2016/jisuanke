@@ -8,7 +8,6 @@ public:
     int num;
     int value[26];
     Node* father;
-    Node* child;
     Node() {
         memset(this->value,0,sizeof(this->value));
     }
@@ -74,7 +73,6 @@ void bfs() {
         for(int j=0;j<V;j++) {
             child.value[j] = fnode.value[j] + node_arr[i].value[j];
         }
-        child.child = NULL;
         node_queue.push(child);
     }
     bfs();
