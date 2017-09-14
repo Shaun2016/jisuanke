@@ -1,0 +1,96 @@
+#include<iostream>
+#include<queue>
+#include<string.h>
+using namespace std;
+
+struct Node {
+public:
+    int num;
+    int value[26];
+    Node* father;
+    Node* child;
+    Node() {
+        memset(this->value,0,sizeof(this->value));
+    }
+};
+
+void bfs();
+int need[26] = {0};
+bool isEnough(Node);
+queue<Node> node_queue;
+Node* node_arr;
+int V,G;
+int res[16];
+
+int main() {
+    cin>>V;
+    for(int i=0;i<V;i++) {
+        cin>>need[i];
+    }
+    cin>>G;
+    node_arr = new Node[G+1];
+    for(int i=1;i<=G;i++) {
+        for(int j=0;j<V;j++) {
+            cin>>node_arr[i].value[j];
+            node_arr[i].num = i;
+            node_arr[i].father = NULL;
+        }
+    }
+    for(int i=1;i<=G;i++) {
+        node_queue.push(node_arr[i]);
+    }
+    bfs();
+    return 0;
+}
+
+void bfs() {
+    Node fnode = node_queue.front();
+    if(isEnough(fnode)) {
+        // 向上回溯找到父节点
+        int len = 0;
+        while(fnode.father != NULL) {
+            res[len] = fnode.num;
+            len ++;
+            fnode = *fnode.father;
+        }
+        res[len] = fnode.num;
+        cout<<++len<<" ";
+        for(int i=len-1;i>=0;i--) {
+            if(i == 0)
+                cout<<res[i];
+            else
+                cout<<res[i]<<" ";
+
+        }
+        return;
+    }
+    // 如果队首元素不符合要求，弹出队首元素
+    node_queue.pop();
+    // 将队首元素的所有子节点进队
+    for(int i=fnode.num+1;i<=G;i++) {
+        Node child;
+        child.father = &fnode;
+        child.num = i;
+        for(int j=0;j<V;j++) {
+            child.value[j] = fnode.value[j] + node_arr[i].value[j];
+        }
+        child.child = NULL;
+        node_queue.push(child);
+    }
+    bfs();
+}
+
+bool isEnough(Node node) {
+    for(int i=0;i<V;i++)
+        if(node.value[i] < need[i])
+            return false;
+    return true;
+}
+/*
+4
+100 200 300 400
+3
+50 50 50 50
+200 300 200 300
+900 150 389 399
+*/
