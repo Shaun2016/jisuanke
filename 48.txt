@@ -1,0 +1,50 @@
+#include<stdio.h>
+#define MAX(x,y)(x)>(y)?(x):(y)
+int sum(int*,int,int);
+
+int main() {
+    int N;
+    scanf("%d",&N);
+    int* arr = new int[N];
+    // 创建序列的数组
+    for(int i=0;i<N;i++) {
+        scanf("%d",arr+i);
+    }
+    // 动态创建二维数组
+    int** d = new int*[N];
+    for(int i=0;i<N;i++) {
+        d[i] = new int[N];
+        for(int j=0;j<N;j++) {
+            d[i][j] = 0;
+        }
+        d[i][i] = arr[i];
+    }
+    // 自底向上初始化二维数组
+    int ts = 0;
+    for(int j=1;j<N;j++) {
+        ts = sum(arr,j-1,j);
+        for(int i=j-1;i>=0;i--) {
+            d[i][j] = MAX(ts-d[i][j-1],ts-d[i+1][j]);
+            ts += arr[i-1];  // 更新当前范围数字和
+        }
+    }
+    printf("%d %d\n",d[0][N-1],sum(arr,0,N-1)-d[0][N-1]);
+    return 0;
+}
+
+/*
+序列数组从s到e的数字和
+*/
+int sum(int* arr,int s,int e) {
+    int temp = 0;
+    for(int i=s;i<=e;i++) {
+        temp += arr[i];
+    }
+    return temp;
+}
+
+/*
+input:
+6 
+4 7 2 9 5 2
+*/
